@@ -23,7 +23,8 @@ function csvController($scope) {
         model.headers = newValue[0]["0"].split(',');
         _.each(_.rest(newValue, 1), function (d) {
             var obj = {};
-            var dataArr = d["0"].split(',');
+
+            var dataArr = splitStr(d["0"]);
             var index = 0;
             _.each(model.headers, function (h) {
                 obj[h] = dataArr[index];
@@ -39,6 +40,30 @@ function csvController($scope) {
         model.result = rowToLookIn[colToLook];
     }
 }
+
+// from http://stackoverflow.com/questions/11456850/split-a-string-by-commas-but-ignore-commas-within-double-quotes-using-javascript
+// - Should GO through bit more testing and move to utilities
+function splitStr (str) {
+    var result = [];
+    var strBuf = '';
+    var start = 0;
+    var marker = false;
+    for (var i = 0; i < str.length; i++) {
+
+        if (str[i] === '"') {
+            marker = !marker;
+        }
+        if (str[i] === ',' && !marker) {
+            result.push(str.substr(start, i - start));
+            start = i + 1;
+        }
+    }
+    if (start <= str.length) {
+        result.push(str.substr(start, i - start));
+
+    }
+    return result;
+};
 
 app.component('csvAtomus', {
     templateUrl: '/Atomus/upload/csv.component.html',

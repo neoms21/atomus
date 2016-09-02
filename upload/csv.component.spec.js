@@ -1,10 +1,10 @@
 describe('component: csv-atomus', function () {
 
-    var scope, model, componentController, element;
+    var scope, model, componentController;
     beforeEach(angular.mock.module('app'));
 
     function createController() {
-        model = componentController('csvAtomus', {$scope: scope})
+        model = componentController('csvAtomus', {$scope: scope});
         model.$onInit();
     }
 
@@ -49,10 +49,11 @@ describe('component: csv-atomus', function () {
 
         model.row = 2;
         model.col =1;
-        model.getData()
+        model.getData();
         expect(model.result).toEqual('Evan');
+        model.row =3;
         model.col =11;
-        model.getData()
-        expect(model.result).toEqual('http://www.capgeminiamerica.co.uk');
+        model.getData();
+        expect(model.result).toEqual('http://www.elliottjohnwesq.co.uk');
     })
 });
